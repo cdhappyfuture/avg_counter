@@ -1,5 +1,6 @@
 #include <ExcelFormat.h>
 #include "calc.h"
+#include <iostream>
 
 namespace Calc
 {
@@ -27,12 +28,11 @@ namespace Calc
             for (int c = beg_CI; c <= end_CI; c++)
             {
                 cell = sheet->Cell(r,c);
-                if (cell->GetInteger())
-                    sum += cell->GetInteger();
-                else if (cell->GetDouble())
+                if (cell->GetDouble())
                     sum += cell->GetDouble();
                 else
-                    throw CellError();
+                    sum += cell->GetInteger();
+                //    throw CellError(;
                 count++;
             }
         return sum/count;
@@ -66,7 +66,7 @@ Result* Calc::calc(double beg_time, double end_time, string day_file)
         if (row == sheet->GetTotalRows()-1)
             return NULL;
     }
-    end = row;
+    end = ++row;
 
     // Вычисляем средние значения
     Result *res = new Result;
