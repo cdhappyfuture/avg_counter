@@ -1,6 +1,5 @@
 #include <ExcelFormat.h>
 #include "calc.h"
-#include <iostream>
 
 namespace Calc
 {
@@ -53,14 +52,14 @@ Result* Calc::calc(double beg_time, double end_time, string day_file)
     ExcelFormat::BasicExcelCell* cell_time = sheet->Cell(row, TIME_CI); // первая запись в таблице
     if (TimeConvert(cell_time->GetString()) > end_time)
         return NULL;
-    while (TimeConvert(cell_time->GetString()) < beg_time)
+    while (TimeConvert(cell_time->GetString()) + 0.00001 < beg_time)
     {
         cell_time = sheet->Cell(++row, TIME_CI);
         if (row == sheet->GetTotalRows()-1)
             return NULL;
     }
     beg = row;
-    while (TimeConvert(cell_time->GetString()) < end_time)
+    while (TimeConvert(cell_time->GetString()) + 0.00001 < end_time)
     {
         cell_time = sheet->Cell(++row, TIME_CI);
         if (row == sheet->GetTotalRows()-1)
